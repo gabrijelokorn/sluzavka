@@ -1,5 +1,5 @@
 #SLUZAVKA
-#1) Zajem zahtev
+## 1) Zajem zahtev
 ### 1.1) Opis
     Primerjanje treh različnih omrežij med seboj:
         1) Sluzavka
@@ -26,9 +26,9 @@
     Pri računalniško ustvarjenemu omrežju se tirnice (poti) ne smejo križati - ena pot ne sme sekati druge poti.
 
 
-#2) Načrt programske opreme
+## 2) Načrt programske opreme
   - standard zapisa postaj v bazi:
     - ime_postaje, x_kordinata, y_kordinata
   - javascript, html, css
 
-#3) Implementacija
+## 3) Implementacija
