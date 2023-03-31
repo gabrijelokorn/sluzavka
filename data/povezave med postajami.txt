@@ -1,8 +1,0 @@
-Ime_postaje_1,Ime_postaje_2
-Jesenice,Anhovo
-Anhovo,Nova_Gorica
-Nova_Gorica,Šempeter_pri_Gorici
-Šempeter_pri_Gorici,Prvačina
-Prvačina,Ajdovščina
-Prvačina,Kreplje
-Kreplje
