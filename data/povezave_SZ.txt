@@ -1,0 +1,10 @@
+{
+	{
+	"Postaja 1":"Jesenice",
+	"Postaja 2":"Kranj"
+	},
+	{
+	"Postaja 1":"Jesenice",
+	"Postaja 2":"Kranj"
+	}
+}
