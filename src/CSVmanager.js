@@ -2,7 +2,6 @@ const {load} = require('csv-load-sync');
 
 class CSVmanager {
     constructor(ime_datoteke) {
-        console.log(ime_datoteke);
         this.ime_datoteke = ime_datoteke;
     }
     
