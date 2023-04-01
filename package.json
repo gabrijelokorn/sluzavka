@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "csv": "^6.2.8"
+    "csv": "^6.2.8",
+    "csv-load-sync": "^2.3.1",
+    "csv-parse": "^5.3.6",
+    "fs": "^0.0.1-security",
+    "read-line": "^0.1.2"
   }
 }
