@@ -1,4 +1,4 @@
-const CSVmanager = require("./CSVmanager");
+const CSVmanager = require("./csvManager");
 
 const data_directory = "../data/";
 const lokacije_csv = data_directory + "lokacije_postaj.csv";
