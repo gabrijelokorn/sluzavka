@@ -1,7 +1,7 @@
-const CSVmanager = require("./csvManager");
+const CSVmanager = require("./utils/csvManager");
 const Postaja = require("./components/postaja");
 const Povezava = require("./components/povezava");
-
+const lodash = require("lodash");
 // TODO: Sestavi računalniško generirano omrežje z uporabo postaj in zapiši v povezave_computer.csv
 
 // Pripravi branje vsake cdv datoteke

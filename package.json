@@ -1,9 +1,24 @@
 {
+  "name": "webpack-demo",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
     "csv": "^6.2.8",
     "csv-load-sync": "^2.3.1",
     "csv-parse": "^5.3.6",
     "fs": "^0.0.1-security",
+    "lodash": "^4.17.21",
     "read-line": "^0.1.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.77.0",
+    "webpack-cli": "^5.0.1"
   }
 }
