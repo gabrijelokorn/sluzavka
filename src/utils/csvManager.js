@@ -1,4 +1,5 @@
 const {load} = require('csv-load-sync');
+// import {load} from 'csv-load-sync';
 
 class CSVmanager {
     constructor(ime_datoteke) {
