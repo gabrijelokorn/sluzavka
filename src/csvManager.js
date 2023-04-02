@@ -6,8 +6,7 @@ class CSVmanager {
     }
     
     readCSV () {
-        const csv = load(this.ime_datoteke);
-        return csv;
+        return load(this.ime_datoteke);
     }
 }
 
