@@ -6,7 +6,7 @@ class Postaja {
     }
 
     razdalja(destination) {
-        return Math.sqrt(Math.pow((this.x - destination.x), 2) + Math.pow((this.y - destination.y), 2));
+        return 0.26591231 * Math.sqrt(Math.pow((this.x - destination.x), 2) + Math.pow((this.y - destination.y), 2));
     }
 }
 

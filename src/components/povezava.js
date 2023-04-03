@@ -5,7 +5,7 @@ class Povezava {
     }
 
     razdalja () {
-        return Math.sqrt(Math.pow((this.A.x - this.B.x), 2) + Math.pow((this.A.y - this.B.y), 2));
+        return 0.26591231 * Math.sqrt(Math.pow((this.A.x - this.B.x), 2) + Math.pow((this.A.y - this.B.y), 2));
     }
 }
 
