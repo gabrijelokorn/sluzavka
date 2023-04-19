@@ -68,26 +68,20 @@
 
 import _ from 'lodash';
 import data_lokacije from '../data/lokacije_postaj.csv';
+import data_SZ from '../data/povezave_SZ.csv'
+import data_physarum from '../data/povezave_physarum.csv'
+import data_computer from '../data/povezave_computer.csv'
 
-console.log(data_lokacije);
-// import data_SZ from '../data/povezave_SZ.csv'
-// import data_physarum from '../data/povezave_physarum.csv'
-// import data_computer from '../data/povezave_computer.csv'
-
-// const data_lokacije         = locReader.readCSV();
-// const data_SZ               = SZReader.readCSV();
-// const data_physarum         = physarumReader.readCSV();
-// const data_computer         = computerReader.readCSV();
-
-// // z uporabo razredov Postaja in Povezava sestavi seznam postaj in povezav za vsa tri omrežja
-// function zgradi_postaje (seznam_postaj) {
-//     let postaje = [];
-//     seznam_postaj.forEach(element => {
-//         postaje.push(new postaja(element.Ime_postaje, element.x, element.y));
-//     });
-//     return postaje;
-// }
-// const postaje = zgradi_postaje(data_lokacije);
+// z uporabo razredov Postaja in Povezava sestavi seznam postaj in povezav za vsa tri omrežja
+function zgradi_postaje (seznam_postaj) {
+    let postaje = [];
+    seznam_postaj.forEach(element => {
+        postaje.push(new postaja(element.Ime_postaje, element.x, element.y));
+    });
+    return postaje;
+}
+const postaje = zgradi_postaje(data_lokacije);
+console.log(postaje);
 
 // function zgradi_omrezje (seznam_povezav) {
 //     let omrezje = [];
