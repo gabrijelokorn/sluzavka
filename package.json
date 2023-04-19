@@ -2,11 +2,16 @@
   "dependencies": {
     "csv": "^6.2.8",
     "csv-load-sync": "^2.3.1",
+    "csv-loader": "^3.0.5",
     "csv-parse": "^5.3.6",
-    "read-line": "^0.1.2"
+    "html-webpack-plugin": "^5.5.1",
+    "loadsh": "0.0.4",
+    "read-line": "^0.1.2",
+    "webpack": "^5.79.0"
   },
   "devDependencies": {
     "fs": "^0.0.1-security",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "webpack-cli": "^5.0.1"
   }
 }
