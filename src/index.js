@@ -30,8 +30,6 @@ function zgradi_omrezje (seznam_povezav) {
 const omrezje_SZ = zgradi_omrezje(data_SZ);
 const omrezje_physarum = zgradi_omrezje(data_physarum);
 const omrezje_computer = zgradi_omrezje(data_computer);
-
-
 /* izpiši množice postaj za omrežje */
 // console.log(omrezje_SZ);
 // console.log(omrezje_physarum);
@@ -44,8 +42,64 @@ function dolzina_omrezja(omrezje){
     }); 
     return dolzina;
 }
+/* izpiši dolžine omrežij */
+// console.log(dolzina_omrezja(omrezje_SZ));
+// console.log(dolzina_omrezja(omrezje_SZ));
+// console.log(dolzina_omrezja(omrezje_SZ));
 
-console.log(dolzina_omrezja(omrezje_SZ));
+/* funkcija sosednje_postaje vzame
+    @param postaja kot postajo v omrezju
+    @param omrezje kot omrezje povezav (sz, rač, physarum)ž
+    in vrne seznam postaj od postaje
+*/
+function sosednje_postaje(postaja, omrezje) {
+    let seznam_sosed = [];
+    omrezje.forEach(element => {
+        if (element.A == postaja) {
+            seznam_sosed.push(element.B);
+        } else if(element.B == postaja) {
+            seznam_sosed.push(element.A);
+        }
+    });
+    return seznam_sosed;
+}
+
+function najkrajsa_razdalja(zacetna_postaja, koncna_postaja, trenutna_postaja, prepotovana_razdalja, prepotovane_postaje, omrezje) {
+
+    if (trenutna_postaja == koncna_postaja) {
+        return 0;
+    }
+
+    if (prepotovane_postaje.find(obiskana => obiskana == trenutna_postaja)) {
+        return false;
+    }
+
+    prepotovane_postaje.push(trenutna_postaja);
+
+    let sosede = sosednje_postaje(trenutna_postaja, omrezje);
+    let primerjava_sosed = new Map();
+    sosede.forEach(soseda => {
+        let razdalja_do_cilja = najkrajsa_razdalja(zacetna_postaja, koncna_postaja, trenutna_postaja, prepotovana_razdalja, prepotovane_postaje, omrezje);
+        if (razdalja_do_cilja == false) {
+            return;
+        } else {
+            primerjava_sosed.set(soseda, razdalja_do_cilja + trenutna_postaja.razdalja(soseda));
+        }
+    });
+     
+    
+    console.log(primerjava_sosed);
+    let kandidat = Number.MAX_VALUE;
+    for (let iteracija in primerjava_sosed) {
+    }
+
+}
+/* izpiši najkrajše razdalje med dvema povezavama */
+let obiskane_postaje = [];
+console.log(najkrajsa_razdalja(postaje[0], postaje[10], postaje[0], 0, obiskane_postaje, omrezje_SZ));
+// console.log(dolzina_omrezja(omrezje_SZ));
+// console.log(dolzina_omrezja(omrezje_SZ));
+
 
 // // TODO: kliči floyd-warshall za vsa tri omrežja in dobi ven seznam vseh najkrajših poti in postaj na teh poteh
 
