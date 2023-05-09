@@ -7,6 +7,7 @@
   },
   "devDependencies": {
     "fs": "^0.0.1-security",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "webpack-cli": "^5.1.1"
   }
 }
