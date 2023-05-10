@@ -108,7 +108,7 @@ function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaj
     return kandidat;
 }
 /* izpiši najkrajše razdalje med dvema povezavama */
-console.log(najkrajsa_razdalja(poisci_postajo_po_imenu("Anhovo"), poisci_postajo_po_imenu("Pragersko"), [], omrezje_SZ));
+console.log(najkrajsa_razdalja(poisci_postajo_po_imenu("Kranj"), poisci_postajo_po_imenu("Kočevje"), [], omrezje_SZ));
 // console.log(dolzina_omrezja(omrezje_SZ));
 // console.log(dolzina_omrezja(omrezje_SZ));
 
