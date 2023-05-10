@@ -35,6 +35,10 @@ const omrezje_computer = zgradi_omrezje(data_computer);
 // console.log(omrezje_physarum);
 // console.log(omrezje_computer);
 
+function poisci_postajo_po_imenu (ime_postaje) {
+    return postaje.find(p => p.ime == ime_postaje);
+}
+
 function dolzina_omrezja(omrezje){
     let dolzina = 0;
     omrezje.forEach(element => {
@@ -64,39 +68,47 @@ function sosednje_postaje(postaja, omrezje) {
     return seznam_sosed;
 }
 
-function najkrajsa_razdalja(zacetna_postaja, koncna_postaja, trenutna_postaja, prepotovana_razdalja, prepotovane_postaje, omrezje) {
-
-    if (trenutna_postaja == koncna_postaja) {
-        return 0;
-    }
+function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaje, omrezje) {
 
     if (prepotovane_postaje.find(obiskana => obiskana == trenutna_postaja)) {
         return false;
     }
 
     prepotovane_postaje.push(trenutna_postaja);
-
-    let sosede = sosednje_postaje(trenutna_postaja, omrezje);
-    let primerjava_sosed = new Map();
-    sosede.forEach(soseda => {
-        let razdalja_do_cilja = najkrajsa_razdalja(zacetna_postaja, koncna_postaja, trenutna_postaja, prepotovana_razdalja, prepotovane_postaje, omrezje);
-        if (razdalja_do_cilja == false) {
-            return;
-        } else {
-            primerjava_sosed.set(soseda, razdalja_do_cilja + trenutna_postaja.razdalja(soseda));
-        }
-    });
-     
     
-    console.log(primerjava_sosed);
-    let kandidat = Number.MAX_VALUE;
-    for (let iteracija in primerjava_sosed) {
+    if (trenutna_postaja == koncna_postaja) {
+        return {
+            razdalja: 0,
+            postaje_na_najkrajsi_poti: [trenutna_postaja]
+        };
+    }
+    
+    let sosede = sosednje_postaje(trenutna_postaja, omrezje);
+
+    let primerjava_sosed = [];
+    for (let soseda of sosede) {
+        let soseda_pot = najkrajsa_razdalja(soseda, koncna_postaja, [...prepotovane_postaje], omrezje);
+        
+        if (soseda_pot) {
+            soseda_pot.razdalja += trenutna_postaja.razdalja(soseda);
+            soseda_pot.postaje_na_najkrajsi_poti.push(trenutna_postaja);
+            primerjava_sosed.push(soseda_pot);
+        }
     }
 
+    let najboljsa_soseda = Number.MAX_VALUE;
+    let kandidat = undefined;
+
+    for (let soseda of primerjava_sosed) {
+        if (soseda.razdalja < najboljsa_soseda) {
+            najboljsa_soseda = soseda.razdalja;
+            kandidat = soseda;
+        }
+    }
+    return kandidat;
 }
 /* izpiši najkrajše razdalje med dvema povezavama */
-let obiskane_postaje = [];
-console.log(najkrajsa_razdalja(postaje[0], postaje[10], postaje[0], 0, obiskane_postaje, omrezje_SZ));
+console.log(najkrajsa_razdalja(poisci_postajo_po_imenu("Anhovo"), poisci_postajo_po_imenu("Pragersko"), [], omrezje_SZ));
 // console.log(dolzina_omrezja(omrezje_SZ));
 // console.log(dolzina_omrezja(omrezje_SZ));
 
