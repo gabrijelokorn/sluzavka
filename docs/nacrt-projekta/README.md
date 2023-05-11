@@ -4,4 +4,4 @@
 
 `postaja.js` in `povezava.js` so razredne datoteke, s katerimi opišemo vsa tri omrežja.
 
-`floyd-warshall.js` nam služi kot algoritem za irazčun najkrajših posi med vsakim parom postaj v omrežju.
+ Preprosta rekurzivna funkcija nam služi kot algoritem za izračun najkrajših posi med vsakim parom postaj v omrežju.
