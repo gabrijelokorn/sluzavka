@@ -65,6 +65,8 @@
 // // TODO: funkcije za izris v html datoteki
 
 // // v data_ime si shrani objekte prebranih csv datatek z uporabo funkcije v razredu CSVmanager
+import {default as postaja} from './components/postaja.js';
+import {default as povezava} from './components/povezava.js';
 
 import _ from 'lodash';
 import data_lokacije from '../data/lokacije_postaj.csv';
@@ -81,20 +83,30 @@ function zgradi_postaje (seznam_postaj) {
     return postaje;
 }
 const postaje = zgradi_postaje(data_lokacije);
-console.log(postaje);
+// console.log(postaje);
 
-// function zgradi_omrezje (seznam_povezav) {
-//     let omrezje = [];
-//     seznam_povezav.forEach(element => {
-//         omrezje.push(new povezava(postaje.find(p => p.ime == element.Ime_postaje_1), postaje.find(p => p.ime == element.Ime_postaje_2)));
-//     });
-    
-//     return omrezje;
-// }
-// const omrezje_SZ = zgradi_omrezje(data_SZ);
-// const omrezje_physarum = zgradi_omrezje(data_physarum);
-// const omrezje_computer = zgradi_omrezje(data_computer);
+function zgradi_omrezje (seznam_povezav) {
+    let omrezje = [];
+    // console.log(postaje);
+    seznam_povezav.forEach(element => {
+        const tockaA = postaje.find(postaja => postaja.ime == element.Ime_postaje_1);
+        const tockaB = postaje.find(postaja => postaja.ime == element.Ime_postaje_2);
+        if (!tockaA) {
+            console.log("Error: there is no such 'Postaja' with name: " + element.Ime_postaje_1);
+        } else if (!tockaB) {
+            console.log("Error: there is no such 'Postaja' with name: " + element.Ime_postaje_2);
+        } else {
+            const pov = new povezava(tockaA, tockaB);
+            omrezje.push(pov);
+        }
+    });
+    return omrezje;
+}
+const omrezje_SZ = zgradi_omrezje(data_SZ);
+const omrezje_physarum = zgradi_omrezje(data_physarum);
+const omrezje_computer = zgradi_omrezje(data_computer);
 
+console.log(omrezje_SZ);
 
 // function dolzina_omrezja(omrezje){
 //     let dolzina = 0;
