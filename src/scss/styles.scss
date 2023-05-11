@@ -1,0 +1,27 @@
+// Import all of Bootstrap's CSS
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    padding: 5px;
+}
+
+#izbrane_postaje, #izbrano_omrezje {
+    text-align: center;
+}
+
+
+#seznam_postaj{
+    width: 10%;
+    margin-right: 10px;
+}
+
+#seznam_povezav {
+    min-width: 30%;
+    max-width: 30%;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+}

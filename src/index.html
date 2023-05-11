@@ -2,11 +2,36 @@
     <head>
         <meta charset="utf-8"/>
         <title>Sluzavka</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="../images/pancrea.png">
     </head>
     
-    <body>
-        Html deluje.
 
+    <body>
+        <div class="flex-container">
+            <table id="seznam_postaj" class="table table-striped table-bordered">
+                <caption style="caption-side: top; text-align: center;">
+                    <select id="izbrane_postaje" class="form-select" aria-label="Default select example">
+                        <option>Postaje</option>
+                    </select>
+                </caption>
+                <thead id="seznam_postaj_head" class="thead-dark"></thead>
+                <tbody id="seznam_postaj_body"></tbody>
+            </table>
+            <br>
+            <table id="seznam_povezav" class="table table-striped table-bordered">
+                <caption style="caption-side: top; text-align: center; width: 100%;">
+                    <select id="izbrano_omrezje" class="form-select" aria-label="Default select example">
+                        <option>Slovenske Železnice</option>
+                        <option>Physarum</option>
+                        <option>Computer Generated</option>
+                    </select>
+                </caption>
+                <thead id="seznam_povezav_head" class="thead-dark"></thead>
+                <tbody id="seznam_povezav_body"></tbody>
+            </table>
+            
+            <img src="../images/zemljevid_elektroenergetika_splet.jpg">
+        </div>
     </body>
 </html>
