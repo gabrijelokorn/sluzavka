@@ -32,11 +32,9 @@ function zgradi_omrezje (seznam_povezav) {
 
 const omrezje_SZ = zgradi_omrezje(data_SZ);
 const omrezje_physarum = zgradi_omrezje(data_physarum);
-const omrezje_computer = zgradi_omrezje(data_computer);
-/* izpiši množice postaj za omrežje */
-// console.log(omrezje_SZ);
-// console.log(omrezje_physarum);
-// console.log(omrezje_computer);
+const omrezje_computer_sz = zgradi_omrezje(data_computer);
+const omrezje_computer_physarum = zgradi_omrezje(data_computer);
+const omrezje_custom = zgradi_omrezje([]);
 
 function poisci_postajo_po_imenu (ime_postaje) {
     return postaje.find(p => p.ime == ime_postaje);
@@ -49,10 +47,6 @@ function dolzina_omrezja(omrezje){
     }); 
     return dolzina;
 }
-/* izpiši dolžine omrežij */
-// console.log(dolzina_omrezja(omrezje_SZ));
-// console.log(dolzina_omrezja(omrezje_SZ));
-// console.log(dolzina_omrezja(omrezje_SZ));
 
 /* funkcija sosednje_postaje vzame
     @param postaja kot postajo v omrezju
@@ -76,7 +70,6 @@ function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaj
     if (prepotovane_postaje.find(obiskana => obiskana == trenutna_postaja)) {
         return false;
     }
-
     prepotovane_postaje.push(trenutna_postaja);
     
     if (trenutna_postaja == koncna_postaja) {
@@ -87,7 +80,6 @@ function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaj
     }
     
     let sosede = sosednje_postaje(trenutna_postaja, omrezje);
-
     let primerjava_sosed = [];
     for (let soseda of sosede) {
         let soseda_pot = najkrajsa_razdalja(soseda, koncna_postaja, [...prepotovane_postaje], omrezje);
@@ -101,7 +93,6 @@ function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaj
 
     let najboljsa_soseda = Number.MAX_VALUE;
     let kandidat = undefined;
-
     for (let soseda of primerjava_sosed) {
         if (soseda.razdalja < najboljsa_soseda) {
             najboljsa_soseda = soseda.razdalja;
@@ -111,10 +102,8 @@ function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaj
     return kandidat;
 }
 
-// // TODO: analiza podatkov
-// // TODO: funkcije za izris v html datoteki
 
-
+// HTML izpisovanje postaj
 function inicializacija_tabele_postaj () {
 
     var seznam_postaj_head = document.getElementById("seznam_postaj_head");
@@ -124,15 +113,9 @@ function inicializacija_tabele_postaj () {
     seznam_postaj_h1.textContent = "#";
     var seznam_postaj_h2 = document.createElement("th");
     seznam_postaj_h2.textContent = "Ime postaje";
-    // var seznam_postaj_h3 = document.createElement("th");
-    // seznam_postaj_h3.textContent = "x";
-    // var seznam_postaj_h4 = document.createElement("th");
-    // seznam_postaj_h4.textContent = "y";
 
     seznam_postaj_haederRow.appendChild(seznam_postaj_h1);
     seznam_postaj_haederRow.appendChild(seznam_postaj_h2);
-    // seznam_postaj_haederRow.appendChild(seznam_postaj_h3);
-    // seznam_postaj_haederRow.appendChild(seznam_postaj_h4);
 
     seznam_postaj_head.appendChild(seznam_postaj_haederRow);
     
@@ -146,35 +129,33 @@ function inicializacija_tabele_postaj () {
         var ime = document.createElement("td");
         ime.textContent = postaje[i].ime;
 
-        // var x = document.createElement("td");
-        // x.textContent = postaje[i].x;
-
-        // var y = document.createElement("td");
-        // y.textContent = postaje[i].y;
-
         row.appendChild(zap_st);
         row.appendChild(ime);
-        // row.appendChild(x);
-        // row.appendChild(y);
 
         seznam_postaj_body.appendChild(row);
     }
 }
-
 inicializacija_tabele_postaj();
 
+
+// HTML izpisovanje postaj
 function posodobitev_tabele_povezav () {
     var omrezje;
     switch (document.getElementById("izbrano_omrezje").value) {
         case "Slovenske Železnice":
             omrezje = omrezje_SZ;
             break;
-            case "Physarum":
-            console.log(omrezje_physarum);
+        case "Physarum":
             omrezje = omrezje_physarum;
             break;
-        case "Computer Generated":
-            omrezje = omrezje_computer;
+        case "CG (SZ)":
+            omrezje = omrezje_computer_sz;
+            break;
+        case "CG (Physarum)":
+            omrezje = omrezje_computer_physarum;
+            break;
+        case "Custom":
+            omrezje = omrezje_custom;
             break;
         default:
             omrezje = omrezje_SZ;
@@ -220,5 +201,4 @@ function posodobitev_tabele_povezav () {
 }
 const select_omrezje = document.getElementById("izbrano_omrezje");
 select_omrezje.addEventListener("change", posodobitev_tabele_povezav);
-
 posodobitev_tabele_povezav();
