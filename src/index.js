@@ -7,6 +7,8 @@ import data_SZ from '../data/povezave_SZ.csv'
 import data_physarum from '../data/povezave_physarum.csv'
 import data_computer from '../data/povezave_computer.csv'
 
+console.log(typeof(data_SZ[2]));
+
 import 'bootstrap';
 import './scss/styles.scss'
 
@@ -202,3 +204,19 @@ function posodobitev_tabele_povezav () {
 const select_omrezje = document.getElementById("izbrano_omrezje");
 select_omrezje.addEventListener("change", posodobitev_tabele_povezav);
 posodobitev_tabele_povezav();
+
+
+function draw_circle (x, y) {
+    // var slika = document.getElementById("sredinska");
+    // var ctx = slika.getContext("2d");
+
+    // ctx.fillStyle = "#FF0000";
+    var canvas = document.getElementById("sredinska");
+var ctx = canvas.getContext("2d");
+const myImg = new Image(200,200);
+myImg.src = "../images/zemljevid_elektroenergetika_splet.jpg"
+ctx.beginPath();
+ctx.arc(95,50,40,0,2*Math.PI);
+}
+
+draw_circle(1, 1);
