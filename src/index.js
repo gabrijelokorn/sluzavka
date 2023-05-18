@@ -40,21 +40,14 @@ function poisci_postajo_po_imenu (ime_postaje) {
     return postaje.find(p => p.ime == ime_postaje);
 }
 
-function dolzina_omrezja(omrezje){
-    let dolzina = 0;
-    omrezje.forEach(element => {
-        dolzina += element.razdalja();
-    }); 
-    return dolzina;
-}
 
 /* funkcija sosednje_postaje vzame
-    @param postaja kot postajo v omrezju
+@param postaja kot postajo v omrezju
     @param omrezje kot omrezje povezav (sz, rač, physarum)ž
     in vrne seznam postaj od postaje
-*/
-function sosednje_postaje(postaja, omrezje) {
-    let seznam_sosed = [];
+    */
+   function sosednje_postaje(postaja, omrezje) {
+       let seznam_sosed = [];
     omrezje.forEach(element => {
         if (element.A == postaja) {
             seznam_sosed.push(element.B);
@@ -66,7 +59,7 @@ function sosednje_postaje(postaja, omrezje) {
 }
 
 function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaje, omrezje) {
-
+    
     if (prepotovane_postaje.find(obiskana => obiskana == trenutna_postaja)) {
         return false;
     }
@@ -90,7 +83,7 @@ function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaj
             primerjava_sosed.push(soseda_pot);
         }
     }
-
+    
     let najboljsa_soseda = Number.MAX_VALUE;
     let kandidat = undefined;
     for (let soseda of primerjava_sosed) {
@@ -101,8 +94,43 @@ function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaj
     }
     return kandidat;
 }
+// računanje parametra TL (total distance) oz. celokupna razdalja vseh prog
+function dolzina_omrezja(omrezje){
+    let dolzina = 0;
+    omrezje.forEach(element => {
+        dolzina += element.razdalja();
+    }); 
+    return dolzina;
+}
+// računanje parametra MD (minimum distance) oz. povprečne najkrajše poti med dvema naključnima točkama
 
+function racunanje_MD (omrezje) {
+    
+    var celotna_razdalja = 0
+    for (let i = 0; i < 10001; i++) {
 
+        var postaja1 = data_lokacije[Math.floor(Math.random()*data_lokacije.length)]
+        var postaja2 = data_lokacije[Math.floor(Math.random()*data_lokacije.length)]
+
+        while (postaja1 == postaja2) {
+            postaja2 = data_lokacije[Math.floor(Math.random()*data_lokacije.length)]
+        }
+        celotna_razdalja += najkrajsa_razdalja.razdalja(postaja1, postaja2, [], omrezje)
+    }
+    return celotna_razdalja/10000
+}
+
+// računanje parametra FT (fault tolerance) oz. odpornosti na prekinitve, ki je podan kot verjetnost, da naključna prekinitev NE razdeli grafa na dva dela
+
+function racunanje_FT (omrezje) {
+    var verjetnost_prepolovitve = 0
+    omrezje.forEach(element => {
+        element = {0};
+        //najprej povezavo izbriše, nato poišče, če kakšna postaja manjka. če ja, potem izračuna dolžino relacije/TL in to doda verjetnost_prepolovitve
+        return 1-verjetnost_prepolovitve
+
+    })
+}
 // HTML izpisovanje postaj
 function inicializacija_tabele_postaj () {
 
