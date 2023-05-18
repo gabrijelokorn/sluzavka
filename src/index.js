@@ -58,6 +58,14 @@ function poisci_postajo_po_imenu (ime_postaje) {
     return seznam_sosed;
 }
 
+/*
+trenutna_postaja, koncna_postaja -> objekti tipa Postaja
+prepotovane_postaje -> array postaj, ki smo jih na poti že obiskali
+omrežje -> omrežje, na katerem iščemo najkrašjo razdlajo med dvema postajama
+return value -> object: razdalja in pot, kjer je razdalja "number", ki predstavlja
+najkrajšo "pot" med "trenutna_postaja" in "koncna_postaja"
+*/
+
 function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaje, omrezje) {
     
     if (prepotovane_postaje.find(obiskana => obiskana == trenutna_postaja)) {
@@ -102,35 +110,49 @@ function dolzina_omrezja(omrezje){
     }); 
     return dolzina;
 }
+
 // računanje parametra MD (minimum distance) oz. povprečne najkrajše poti med dvema naključnima točkama
-
 function racunanje_MD (omrezje) {
-    
     var celotna_razdalja = 0
-    for (let i = 0; i < 10001; i++) {
+    for (let i = 0; i < 10000; i++) {
 
-        var postaja1 = data_lokacije[Math.floor(Math.random()*data_lokacije.length)]
-        var postaja2 = data_lokacije[Math.floor(Math.random()*data_lokacije.length)]
+        var postaja1 = postaje[Math.floor(Math.random()*data_lokacije.length)]
+        var postaja2;
+        
+        do {
+            postaja2 = postaje[Math.floor(Math.random()*data_lokacije.length)]
+        } while (postaja1 == postaja2) 
 
-        while (postaja1 == postaja2) {
-            postaja2 = data_lokacije[Math.floor(Math.random()*data_lokacije.length)]
-        }
-        celotna_razdalja += najkrajsa_razdalja.razdalja(postaja1, postaja2, [], omrezje)
+        celotna_razdalja += najkrajsa_razdalja(postaja1, postaja2, [], omrezje).razdalja
     }
     return celotna_razdalja/10000
 }
 
-// računanje parametra FT (fault tolerance) oz. odpornosti na prekinitve, ki je podan kot verjetnost, da naključna prekinitev NE razdeli grafa na dva dela
-
+/* računanje parametra FT (fault tolerance) oz. odpornosti 
+na prekinitve, ki je podan kot verjetnost, 
+da naključna prekinitev NE razdeli grafa na dva dela
+*/
 function racunanje_FT (omrezje) {
     var verjetnost_prepolovitve = 0
-    omrezje.forEach(element => {
-        element = {0};
-        //najprej povezavo izbriše, nato poišče, če kakšna postaja manjka. če ja, potem izračuna dolžino relacije/TL in to doda verjetnost_prepolovitve
-        return 1-verjetnost_prepolovitve
+    let dolzina_omr = dolzina_omrezja(omrezje)
+    for (let pov of omrezje) {
+        let omrezje_za_zbrisat = [...omrezje]
 
-    })
+        let postaja1 = pov.A;
+        let postaja2 = pov.B;
+
+        let omrezje_brez_povezave = omrezje_za_zbrisat.filter(item => item !== pov);
+
+        console.log();
+
+        if (najkrajsa_razdalja(postaja1, postaja2, [], omrezje_brez_povezave) == undefined) {
+            verjetnost_prepolovitve += pov.razdalja() / dolzina_omr;
+        }
+    }
+    return 1 - verjetnost_prepolovitve;
 }
+console.log(racunanje_FT(omrezje_SZ));
+
 // HTML izpisovanje postaj
 function inicializacija_tabele_postaj () {
 
@@ -168,7 +190,7 @@ inicializacija_tabele_postaj();
 
 // HTML izpisovanje postaj
 function posodobitev_tabele_povezav () {
-    var omrezje;
+    let omrezje;
     switch (document.getElementById("izbrano_omrezje").value) {
         case "Slovenske Železnice":
             omrezje = omrezje_SZ;
