@@ -6,8 +6,17 @@ body {
     max-width: 100%;
 }
 
-#sredinska {
-    margin: 10px;
+#sredinska1 {
+    padding: 0px;
+}
+#sredinska2 {
+    padding: 0px;
+}
+#sredinska3 {
+    padding: 0px;
+}
+#sredinska4 {
+    padding: 0px;
 }
 
 #izbrane_postaje, #izbrano_omrezje {
@@ -28,3 +37,58 @@ body {
     justify-content: start;
     align-items: flex-start;
 }
+
+.container1 {
+    
+    position: relative;
+    display: inline-block;
+}
+  
+.container1 canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.container2 {
+    
+    position: relative;
+    display: inline-block;
+}
+  
+.container2 canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.container3 {
+    
+    position: relative;
+    display: inline-block;
+}
+  
+.container3 canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.container4 {
+    
+    position: relative;
+    display: inline-block;
+}
+  
+.container4 canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.canvas_slika {
+    width: 75%;
+}
+
+.container_statistika {
+    margin: 10px;
+    columns: 1;
+}
+  
