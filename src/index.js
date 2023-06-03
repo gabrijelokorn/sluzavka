@@ -201,7 +201,7 @@ function racunanje_MD (omrezje) {
 }
 
 // računanje parametra MD za DELAUNAY (minimum distance) oz. povprečne najkrajše poti med dvema naključnima točkama
-function racunanje_MD (omrezje) {
+function racunanje_MD_delaunay (omrezje) {
     var celotna_razdalja = 0;
     for (let i = 0; i < stevilo_iteracij; i++) {
 
@@ -541,3 +541,4 @@ let analiza_delaunay = document.getElementById("analiza_delaunay");
 // console.log((racunanje_MD(omrezje_delaunay) / racunanje_MD(omrezje_mst)).toFixed(5));
 // console.log(racunanje_FT(omrezje_delaunay).toFixed(5));
 // console.log(((racunanje_FT(omrezje_delaunay) / ((dolzina_omrezja(omrezje_delaunay)) / dolzina_omrezja(omrezje_mst)))).toFixed(5));
+*/
