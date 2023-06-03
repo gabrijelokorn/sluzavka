@@ -104,6 +104,74 @@ function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaj
     }
     return kandidat;
 }
+
+// funkcija za računanje MD za delaunay, ki upošteva kot med vektorjem, ki kaže proti cilju in vektorjem, ki ga opiše pot, ki jo želi vzeti
+
+function najkrajsa_razdalja_delaunay(trenutna_postaja, koncna_postaja, prepotovane_postaje, omrezje) {
+    
+    if (prepotovane_postaje.find(obiskana => obiskana == trenutna_postaja)) {
+        return false;
+    }
+    prepotovane_postaje.push(trenutna_postaja);
+    
+    if (trenutna_postaja == koncna_postaja) {
+        return {
+            razdalja: 0,
+            postaje_na_najkrajsi_poti: [trenutna_postaja]
+        };
+    }
+    
+    let sosede = sosednje_postaje(trenutna_postaja, omrezje);
+    let primerjava_sosed = [];
+    for (let soseda of sosede) {
+        // tukaj se zgodi preverjanje kota
+        const vektor_do_cilja = {
+            x: koncna_postaja.x - trenutna_postaja.x,
+            y: koncna.y - trenutna_postaja.y
+        }
+        const vektor_do_naslednje_postaje = {
+            x: soseda.x - trenutna_postaja.x,
+            y: soseda.y - trenutna_postaja.y
+        }
+        //tukaj se preveri kot z vektorskim produktom
+        if ( -Math.PI/2 < racunanje_kota(vektor_do_cilja, vektor_do_naslednje_postaje) < Math.PI/2) {
+            return undefined
+        }
+        let soseda_pot = najkrajsa_razdalja(soseda, koncna_postaja, [...prepotovane_postaje], omrezje);
+        
+        if (soseda_pot) {
+            soseda_pot.razdalja += trenutna_postaja.razdalja(soseda);
+            soseda_pot.postaje_na_najkrajsi_poti.push(trenutna_postaja);
+            primerjava_sosed.push(soseda_pot);
+        }
+    }
+    
+    let najboljsa_soseda = Number.MAX_VALUE;
+    let kandidat = undefined;
+    for (let soseda of primerjava_sosed) {
+        if (soseda.razdalja < najboljsa_soseda) {
+            najboljsa_soseda = soseda.razdalja;
+            kandidat = soseda;
+        }
+    }
+    return kandidat;
+}
+
+// izračuna kot med vektorjema
+
+function racunanje_kota(vektor_do_cilja, vektor_do_naslednje_postaje) {
+   let kot_v_radianih = Math.acos( (vektor_do_cilja.x * vektor_do_cilja.y + vektor_do_naslednje_postaje.x * vektor_do_naslednje_postaje.y) / (racunanje_dolzine_vektorja(vektor_do_cilja) * racunanje_dolzine_vektorja()) )
+
+   return kot_v_radianih
+}
+
+
+// izracuna dolzino vektorja
+function racunanje_dolzine_vektorja (vektor) {
+
+    return Math.sqrt(Math.pow((vektor.x), 2) + Math.pow((vektor.y), 2))
+}
+
 // računanje parametra TL (total distance) oz. celokupna razdalja vseh prog
 function dolzina_omrezja(omrezje){
     let dolzina = 0;
@@ -113,7 +181,7 @@ function dolzina_omrezja(omrezje){
     return dolzina;
 }
 
-let stevilo_iteracij = 10000;
+let stevilo_iteracij = 2;
 
 // računanje parametra MD (minimum distance) oz. povprečne najkrajše poti med dvema naključnima točkama
 function racunanje_MD (omrezje) {
