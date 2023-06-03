@@ -108,7 +108,7 @@ function najkrajsa_razdalja(trenutna_postaja, koncna_postaja, prepotovane_postaj
 // funkcija za računanje MD za delaunay, ki upošteva kot med vektorjem, ki kaže proti cilju in vektorjem, ki ga opiše pot, ki jo želi vzeti
 
 function najkrajsa_razdalja_delaunay(trenutna_postaja, koncna_postaja, prepotovane_postaje, omrezje) {
-    
+
     if (prepotovane_postaje.find(obiskana => obiskana == trenutna_postaja)) {
         return false;
     }
@@ -127,16 +127,19 @@ function najkrajsa_razdalja_delaunay(trenutna_postaja, koncna_postaja, prepotova
         // tukaj se zgodi preverjanje kota
         const vektor_do_cilja = {
             x: koncna_postaja.x - trenutna_postaja.x,
-            y: koncna.y - trenutna_postaja.y
+            y: koncna_postaja.y - trenutna_postaja.y
         }
+       
         const vektor_do_naslednje_postaje = {
             x: soseda.x - trenutna_postaja.x,
             y: soseda.y - trenutna_postaja.y
         }
+
         //tukaj se preveri kot z vektorskim produktom
-        if ( -Math.PI/2 < racunanje_kota(vektor_do_cilja, vektor_do_naslednje_postaje) < Math.PI/2) {
+        if (!( -Math.PI/2.5 < racunanje_kota(vektor_do_cilja, vektor_do_naslednje_postaje) && racunanje_kota(vektor_do_cilja, vektor_do_naslednje_postaje) < Math.PI/2.5)) {
             continue
         }
+
         let soseda_pot = najkrajsa_razdalja_delaunay(soseda, koncna_postaja, [...prepotovane_postaje], omrezje);
         
         if (soseda_pot) {
@@ -160,7 +163,7 @@ function najkrajsa_razdalja_delaunay(trenutna_postaja, koncna_postaja, prepotova
 // izračuna kot med vektorjema
 
 function racunanje_kota(vektor_do_cilja, vektor_do_naslednje_postaje) {
-   let kot_v_radianih = Math.acos( (vektor_do_cilja.x * vektor_do_cilja.y + vektor_do_naslednje_postaje.x * vektor_do_naslednje_postaje.y) / (racunanje_dolzine_vektorja(vektor_do_cilja) * racunanje_dolzine_vektorja()) )
+   let kot_v_radianih = Math.acos( (vektor_do_cilja.x * vektor_do_naslednje_postaje.x + vektor_do_naslednje_postaje.y * vektor_do_cilja.y) / (racunanje_dolzine_vektorja(vektor_do_cilja) * racunanje_dolzine_vektorja(vektor_do_naslednje_postaje)) )
 
    return kot_v_radianih
 }
@@ -181,7 +184,7 @@ function dolzina_omrezja(omrezje){
     return dolzina;
 }
 
-let stevilo_iteracij = 2;
+let stevilo_iteracij = 200;
 
 // računanje parametra MD (minimum distance) oz. povprečne najkrajše poti med dvema naključnima točkama
 function racunanje_MD (omrezje) {
@@ -207,10 +210,11 @@ function racunanje_MD_delaunay (omrezje) {
 
         var postaja1 = postaje[Math.floor(Math.random()*data_lokacije.length)];
         var postaja2;
-        
         do {
             postaja2 = postaje[Math.floor(Math.random()*data_lokacije.length)];
         } while (postaja1 == postaja2) 
+        
+
 
         celotna_razdalja += najkrajsa_razdalja_delaunay(postaja1, postaja2, [], omrezje).razdalja;
     }
@@ -464,7 +468,7 @@ const select_omrezje = document.getElementById("izbrano_omrezje");
 select_omrezje.addEventListener("change", posodobitev_tabele_povezav);
 posodobitev_tabele_povezav();
 
-// function analiza_omrezja_compute (omrezje, html_element) {
+//function analiza_omrezja_compute (omrezje, html_element) {
 //     let celokupna_dolzina = document.createElement("td");
 //     celokupna_dolzina.innerHTML = (dolzina_omrezja(omrezje) / dolzina_omrezja(omrezje_mst)).toFixed(5);
     
@@ -518,27 +522,18 @@ let od_mst = 0;
 let od_over_cd_mst = 0;
 
 let cd_delaunay = 5.62659;
-let md_delaunay = 0;
-let od_delaunay = 0;
-let od_over_cd_delaunay = 0;
+let md_delaunay = 0.7;
+let od_delaunay = 1;
+let od_over_cd_delaunay = 0.17772;
 
-
-
-
-/*
 let analiza_SZ = document.getElementById("analiza_SZ");
-//analiza_omrezja(cd_sz, md_sz, od_sz, od_over_cd_sz, analiza_SZ);
+analiza_omrezja(cd_sz, md_sz, od_sz, od_over_cd_sz, analiza_SZ);
 
 let analiza_physarum = document.getElementById("analiza_physarum");
-//analiza_omrezja(cd_physarum, md_physarum, od_physarum, od_over_cd_physarum, analiza_physarum);
+analiza_omrezja(cd_physarum, md_physarum, od_physarum, od_over_cd_physarum, analiza_physarum);
 
 let analiza_MST = document.getElementById("analiza_MST");
-//analiza_omrezja(cd_mst, md_mst, od_mst, od_over_cd_mst, analiza_MST);
+analiza_omrezja(cd_mst, md_mst, od_mst, od_over_cd_mst, analiza_MST);
 
 let analiza_delaunay = document.getElementById("analiza_delaunay");
-// analiza_omrezja(cd_delaunay, md_delaunay, od_delaunay, od_over_cd_delaunay, analiza_delaunay);
-
-// console.log((racunanje_MD(omrezje_delaunay) / racunanje_MD(omrezje_mst)).toFixed(5));
-// console.log(racunanje_FT(omrezje_delaunay).toFixed(5));
-// console.log(((racunanje_FT(omrezje_delaunay) / ((dolzina_omrezja(omrezje_delaunay)) / dolzina_omrezja(omrezje_mst)))).toFixed(5));
-*/
+analiza_omrezja(cd_delaunay, md_delaunay, od_delaunay, od_over_cd_delaunay, analiza_delaunay);
