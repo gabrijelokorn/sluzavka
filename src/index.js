@@ -507,17 +507,17 @@ let od_delaunay = 0;
 let od_over_cd_delaunay = 0;
 
 let analiza_SZ = document.getElementById("analiza_SZ");
-// analiza_omrezja(cd_sz, md_sz, od_sz, od_over_cd_sz, analiza_SZ);
+analiza_omrezja(cd_sz, md_sz, od_sz, od_over_cd_sz, analiza_SZ);
 
 let analiza_physarum = document.getElementById("analiza_physarum");
-// analiza_omrezja(cd_physarum, md_physarum, od_physarum, od_over_cd_physarum, analiza_physarum);
+analiza_omrezja(cd_physarum, md_physarum, od_physarum, od_over_cd_physarum, analiza_physarum);
 
 let analiza_MST = document.getElementById("analiza_MST");
-// analiza_omrezja(cd_mst, md_mst, od_mst, od_over_cd_mst, analiza_MST);
+analiza_omrezja(cd_mst, md_mst, od_mst, od_over_cd_mst, analiza_MST);
 
 let analiza_delaunay = document.getElementById("analiza_delaunay");
-// analiza_omrezja(cd_delaunay, md_delaunay, od_delaunay, od_over_cd_delaunay, omrezje_delaunay, analiza_delaunay);
+analiza_omrezja(cd_delaunay, md_delaunay, od_delaunay, od_over_cd_delaunay, analiza_delaunay);
 
-// console.log((racunanje_MD(omrezje_delaunay) / racunanje_MD(omrezje_mst)).toFixed(5));
+console.log((racunanje_MD(omrezje_delaunay) / racunanje_MD(omrezje_mst)).toFixed(5));
 // console.log(racunanje_FT(omrezje_delaunay).toFixed(5));
 // console.log(((racunanje_FT(omrezje_delaunay) / ((dolzina_omrezja(omrezje_delaunay)) / dolzina_omrezja(omrezje_mst)))).toFixed(5));
