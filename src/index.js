@@ -135,9 +135,9 @@ function najkrajsa_razdalja_delaunay(trenutna_postaja, koncna_postaja, prepotova
         }
         //tukaj se preveri kot z vektorskim produktom
         if ( -Math.PI/2 < racunanje_kota(vektor_do_cilja, vektor_do_naslednje_postaje) < Math.PI/2) {
-            return undefined
+            continue
         }
-        let soseda_pot = najkrajsa_razdalja(soseda, koncna_postaja, [...prepotovane_postaje], omrezje);
+        let soseda_pot = najkrajsa_razdalja_delaunay(soseda, koncna_postaja, [...prepotovane_postaje], omrezje);
         
         if (soseda_pot) {
             soseda_pot.razdalja += trenutna_postaja.razdalja(soseda);
@@ -200,6 +200,22 @@ function racunanje_MD (omrezje) {
     return celotna_razdalja/stevilo_iteracij;
 }
 
+// računanje parametra MD za DELAUNAY (minimum distance) oz. povprečne najkrajše poti med dvema naključnima točkama
+function racunanje_MD (omrezje) {
+    var celotna_razdalja = 0;
+    for (let i = 0; i < stevilo_iteracij; i++) {
+
+        var postaja1 = postaje[Math.floor(Math.random()*data_lokacije.length)];
+        var postaja2;
+        
+        do {
+            postaja2 = postaje[Math.floor(Math.random()*data_lokacije.length)];
+        } while (postaja1 == postaja2) 
+
+        celotna_razdalja += najkrajsa_razdalja_delaunay(postaja1, postaja2, [], omrezje).razdalja;
+    }
+    return celotna_razdalja/stevilo_iteracij;
+}
 
 /* računanje parametra FT (fault tolerance) oz. odpornosti 
 na prekinitve, ki je podan kot verjetnost, 
@@ -506,18 +522,22 @@ let md_delaunay = 0;
 let od_delaunay = 0;
 let od_over_cd_delaunay = 0;
 
+
+
+
+/*
 let analiza_SZ = document.getElementById("analiza_SZ");
-analiza_omrezja(cd_sz, md_sz, od_sz, od_over_cd_sz, analiza_SZ);
+//analiza_omrezja(cd_sz, md_sz, od_sz, od_over_cd_sz, analiza_SZ);
 
 let analiza_physarum = document.getElementById("analiza_physarum");
-analiza_omrezja(cd_physarum, md_physarum, od_physarum, od_over_cd_physarum, analiza_physarum);
+//analiza_omrezja(cd_physarum, md_physarum, od_physarum, od_over_cd_physarum, analiza_physarum);
 
 let analiza_MST = document.getElementById("analiza_MST");
-analiza_omrezja(cd_mst, md_mst, od_mst, od_over_cd_mst, analiza_MST);
+//analiza_omrezja(cd_mst, md_mst, od_mst, od_over_cd_mst, analiza_MST);
 
 let analiza_delaunay = document.getElementById("analiza_delaunay");
-analiza_omrezja(cd_delaunay, md_delaunay, od_delaunay, od_over_cd_delaunay, analiza_delaunay);
+// analiza_omrezja(cd_delaunay, md_delaunay, od_delaunay, od_over_cd_delaunay, analiza_delaunay);
 
-console.log((racunanje_MD(omrezje_delaunay) / racunanje_MD(omrezje_mst)).toFixed(5));
+// console.log((racunanje_MD(omrezje_delaunay) / racunanje_MD(omrezje_mst)).toFixed(5));
 // console.log(racunanje_FT(omrezje_delaunay).toFixed(5));
 // console.log(((racunanje_FT(omrezje_delaunay) / ((dolzina_omrezja(omrezje_delaunay)) / dolzina_omrezja(omrezje_mst)))).toFixed(5));
